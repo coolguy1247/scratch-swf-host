@@ -37,6 +37,20 @@ window.RufflePlayer.config = {
     height: 100%;
     display: block;
   }
+
+  #fullscreenBtn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 9999;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: 1px solid #fff;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 14px;
+  }
 </style>
 </head>
 
@@ -44,14 +58,23 @@ window.RufflePlayer.config = {
 
 <div id="wrapper">
 
-  <!-- This is the correct path now that the SWF downloads -->
   <object
       id="flash"
       data="/scratch-swf-host/Scratch.swf"
       type="application/x-shockwave-flash">
   </object>
 
+  <button id="fullscreenBtn">Fullscreen</button>
 </div>
+
+<script>
+document.getElementById("fullscreenBtn").onclick = () => {
+    const player = document.querySelector("ruffle-player");
+    if (player && player.requestFullscreen) {
+        player.requestFullscreen();
+    }
+};
+</script>
 
 </body>
 </html>
