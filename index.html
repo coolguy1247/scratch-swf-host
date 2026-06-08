@@ -10,62 +10,84 @@ window.RufflePlayer.config = {
     autoplay: "on",
     allowFullscreen: true,
     unmuteOverlay: "hidden",
-    logLevel: "debug"
+    logLevel: "error"
 };
 </script>
 
 <script src="https://unpkg.com/@ruffle-rs/ruffle/ruffle.js"></script>
 
 <style>
-  html, body {
+html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
     background: #000;
     overflow: hidden;
-  }
+}
 
-  #wrapper {
+/* Outer container fills the screen */
+#scale-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+}
+
+/* 16:9 aspect ratio box */
+#aspect-box {
     position: relative;
-    width: 100%;
-    height: 100%;
-  }
+    width: 100vw;
+    height: calc(100vw * 9 / 16);
+    max-height: 100vh;
+    max-width: calc(100vh * 16 / 9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-  object, ruffle-player {
+/* SWF scales inside the aspect box */
+object, ruffle-player {
     width: 100%;
     height: 100%;
     display: block;
-  }
+}
 
-  #fullscreenBtn {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
+/* Fullscreen button */
+#fullscreenBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     z-index: 9999;
     background: rgba(0,0,0,0.6);
     color: white;
     border: 1px solid #fff;
-    padding: 8px 12px;
+    padding: 10px 14px;
     cursor: pointer;
     border-radius: 6px;
     font-size: 14px;
-  }
+}
 </style>
 </head>
 
 <body>
 
-<div id="wrapper">
-
-  <object
-      id="flash"
-      data="/scratch-swf-host/Scratch.swf"
-      type="application/x-shockwave-flash">
-  </object>
-
-  <button id="fullscreenBtn">Fullscreen</button>
+<div id="scale-wrapper">
+    <div id="aspect-box">
+        <object
+            id="flash"
+            data="/scratch-swf-host/Scratch.swf"
+            type="application/x-shockwave-flash">
+        </object>
+    </div>
 </div>
+
+<button id="fullscreenBtn">Fullscreen</button>
 
 <script>
 document.getElementById("fullscreenBtn").onclick = () => {
