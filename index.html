@@ -2,8 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Scratch 2.0</title>
+<title>Scratch SWF Host</title>
 
+<!-- Ruffle config -->
 <script>
 window.RufflePlayer = window.RufflePlayer || {};
 window.RufflePlayer.config = {
@@ -14,6 +15,7 @@ window.RufflePlayer.config = {
 };
 </script>
 
+<!-- Ruffle polyfill -->
 <script src="https://unpkg.com/@ruffle-rs/ruffle/ruffle.js"></script>
 
 <style>
@@ -32,6 +34,12 @@ window.RufflePlayer.config = {
     height: 100%;
   }
 
+  object, ruffle-player {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
   #fullscreenBtn {
     position: absolute;
     bottom: 15px;
@@ -45,12 +53,6 @@ window.RufflePlayer.config = {
     border-radius: 6px;
     font-size: 14px;
   }
-
-  object, ruffle-player {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
 </style>
 </head>
 
@@ -58,10 +60,10 @@ window.RufflePlayer.config = {
 
 <div id="wrapper">
 
-  <!-- THIS is the key fix for GitHub Pages -->
+  <!-- IMPORTANT: ?raw=1 forces GitHub to serve the SWF as binary -->
   <object
       id="flash"
-      data="Scratch.swf"
+      data="Scratch.swf?raw=1"
       type="application/x-shockwave-flash">
       <param name="allowFullScreen" value="true">
   </object>
