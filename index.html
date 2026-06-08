@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Scratch SWF Host</title>
 
-<!-- Ruffle config -->
 <script>
 window.RufflePlayer = window.RufflePlayer || {};
 window.RufflePlayer.config = {
@@ -15,7 +14,6 @@ window.RufflePlayer.config = {
 };
 </script>
 
-<!-- Ruffle polyfill -->
 <script src="https://unpkg.com/@ruffle-rs/ruffle/ruffle.js"></script>
 
 <style>
@@ -60,7 +58,6 @@ window.RufflePlayer.config = {
 
 <div id="wrapper">
 
-  <!-- IMPORTANT: ?raw=1 forces GitHub to serve the SWF as binary -->
   <object
       id="flash"
       data="Scratch.swf?raw=1"
