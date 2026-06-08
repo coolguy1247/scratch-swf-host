@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Forced Ruffle Sandbox</title>
 
-<!-- Load Ruffle BEFORE the SWF appears -->
 <script>
 window.RufflePlayer = window.RufflePlayer || {};
 window.RufflePlayer.config = {
@@ -59,7 +58,7 @@ window.RufflePlayer.config = {
 
 <div id="wrapper">
 
-  <!-- This WILL be intercepted by Ruffle -->
+  <!-- THIS is the key fix for GitHub Pages -->
   <object
       id="flash"
       data="Scratch.swf"
