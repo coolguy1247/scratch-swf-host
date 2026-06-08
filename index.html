@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Scratch 2.0 Editor</title>
 
-<!-- Ruffle polyfill -->
 <script src="https://unpkg.com/@ruffle-rs/ruffle/ruffle.js"></script>
 
 <style>
@@ -15,7 +14,6 @@
     height: 100%;
     background: #000;
     overflow: hidden;
-    font-family: sans-serif;
   }
 
   #container {
@@ -24,7 +22,6 @@
     height: 100%;
   }
 
-  /* Loading spinner */
   #loading {
     position: absolute;
     top: 50%;
@@ -50,7 +47,6 @@
     100% { transform: rotate(360deg); }
   }
 
-  /* Fullscreen button */
   #fullscreenBtn {
     position: absolute;
     bottom: 15px;
@@ -64,18 +60,6 @@
     border-radius: 6px;
     font-size: 14px;
   }
-
-  #fullscreenBtn:hover {
-    background: rgba(255,255,255,0.2);
-  }
-
-  /* Mobile tweaks */
-  @media (max-width: 600px) {
-    #fullscreenBtn {
-      font-size: 12px;
-      padding: 6px 10px;
-    }
-  }
 </style>
 </head>
 
@@ -84,42 +68,40 @@
 <div id="container">
   <div id="loading">
     <div id="spinner"></div>
-    Loading Scratch…
+    Loading Scratch.swf…
   </div>
   <button id="fullscreenBtn">Fullscreen</button>
 </div>
 
 <script>
-  window.RufflePlayer = window.RufflePlayer || {};
+window.RufflePlayer = window.RufflePlayer || {};
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const ruffle = window.RufflePlayer.newest();
-    const player = ruffle.createPlayer();
+window.addEventListener("DOMContentLoaded", () => {
+  const ruffle = window.RufflePlayer.newest();
+  const player = ruffle.createPlayer();
 
-    const container = document.getElementById("container");
-    container.appendChild(player);
+  const container = document.getElementById("container");
+  container.appendChild(player);
 
-    // Load SWF
-    player.load("Scratch.swf").then(() => {
-      document.getElementById("loading").style.display = "none";
-    }).catch(err => {
-      document.getElementById("loading").innerHTML =
-        "<b style='color:red;'>Failed to load Scratch.swf</b><br>" +
-        "Check the file path.<br><br>" +
-        "<small>" + err + "</small>";
-    });
+  console.log("Attempting to load Scratch.swf…");
 
-    // Fullscreen button
-    document.getElementById("fullscreenBtn").onclick = () => {
-      if (player.requestFullscreen) {
-        player.requestFullscreen();
-      } else if (player.webkitRequestFullscreen) {
-        player.webkitRequestFullscreen();
-      } else if (player.msRequestFullscreen) {
-        player.msRequestFullscreen();
-      }
-    };
+  // *** THIS is the actual load call ***
+  player.load("Scratch.swf").then(() => {
+    console.log("SWF load promise resolved.");
+    document.getElementById("loading").style.display = "none";
+  }).catch(err => {
+    console.error("SWF failed to load:", err);
+    document.getElementById("loading").innerHTML =
+      "<b style='color:red;'>Failed to load Scratch.swf</b><br>" +
+      "Check the file path.<br><br>" +
+      "<small>" + err + "</small>";
   });
+
+  // Fullscreen
+  document.getElementById("fullscreenBtn").onclick = () => {
+    if (player.requestFullscreen) player.requestFullscreen();
+  };
+});
 </script>
 
 </body>
