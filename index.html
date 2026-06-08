@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Scratch 2.0 Editor</title>
 
-<!-- Ruffle polyfill -->
 <script src="https://unpkg.com/@ruffle-rs/ruffle/ruffle.js"></script>
 
 <style>
@@ -15,101 +14,20 @@
     height: 100%;
     background: #000;
     overflow: hidden;
-    font-family: sans-serif;
   }
 
-  #player-container {
+  ruffle-player {
     width: 100%;
     height: 100%;
-  }
-
-  #loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    font-size: 20px;
-  }
-
-  #spinner {
-    border: 6px solid #444;
-    border-top: 6px solid #fff;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 10px auto;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  #fullscreenBtn {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    z-index: 10;
-    background: rgba(0,0,0,0.6);
-    color: white;
-    border: 1px solid #fff;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 14px;
+    display: block;
   }
 </style>
 </head>
 
 <body>
 
-<div id="player-container"></div>
-
-<div id="loading">
-  <div id="spinner"></div>
-  Loading Scratch.swf…
-</div>
-
-<button id="fullscreenBtn">Fullscreen</button>
-
-<script>
-  // Config
-  window.RufflePlayer = window.RufflePlayer || {};
-  window.RufflePlayer.config = {
-    autoplay: "on",
-    allowScriptAccess: true,
-    allowFullscreen: true,
-    unmuteOverlay: "hidden"
-  };
-
-  window.addEventListener("DOMContentLoaded", () => {
-    const ruffle = window.RufflePlayer.newest();
-
-    // File (you can fork and add your own if you want):
-    // run("Scratch.swf") { ... }
-    const player = ruffle.run({
-      url: "Scratch.swf",
-      container: document.getElementById("player-container"),
-      parameters: {
-        allowFullscreen: "true",
-        menu: "false"
-      }
-    });
-
-    // Hide loading when Ruffle starts rendering
-    player.addEventListener("loadeddata", () => {
-      document.getElementById("loading").style.display = "none";
-    });
-
-    // Fullscreen button
-    document.getElementById("fullscreenBtn").onclick = () => {
-      if (player.requestFullscreen) player.requestFullscreen();
-    };
-  });
-</script>
+<!-- THIS is what forces Ruffle to create the iframe -->
+<ruffle-player src="Scratch.swf"></ruffle-player>
 
 </body>
 </html>
