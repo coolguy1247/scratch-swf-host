@@ -4,7 +4,17 @@
 <meta charset="UTF-8">
 <title>Forced Ruffle Sandbox</title>
 
-<!-- Load Ruffle -->
+<!-- Load Ruffle BEFORE the SWF appears -->
+<script>
+window.RufflePlayer = window.RufflePlayer || {};
+window.RufflePlayer.config = {
+    autoplay: "on",
+    allowFullscreen: true,
+    unmuteOverlay: "hidden",
+    logLevel: "debug"
+};
+</script>
+
 <script src="https://unpkg.com/@ruffle-rs/ruffle/ruffle.js"></script>
 
 <style>
@@ -37,7 +47,7 @@
     font-size: 14px;
   }
 
-  object, embed, ruffle-player {
+  object, ruffle-player {
     width: 100%;
     height: 100%;
     display: block;
@@ -49,28 +59,24 @@
 
 <div id="wrapper">
 
-  <!-- THIS forces Ruffle to create the sandbox iframe -->
-  <object id="flash" data="Scratchv20100815.swf" type="application/x-shockwave-flash">
-    <param name="allowFullScreen" value="true">
+  <!-- This WILL be intercepted by Ruffle -->
+  <object
+      id="flash"
+      data="Scratch.swf"
+      type="application/x-shockwave-flash">
+      <param name="allowFullScreen" value="true">
   </object>
 
   <button id="fullscreenBtn">Fullscreen</button>
 </div>
 
 <script>
-  // Fullscreen button logic
-  document.getElementById("fullscreenBtn").onclick = () => {
+document.getElementById("fullscreenBtn").onclick = () => {
     const player = document.querySelector("ruffle-player");
-
-    if (!player) {
-      alert("Ruffle player not initialized yet.");
-      return;
+    if (player && player.requestFullscreen) {
+        player.requestFullscreen();
     }
-
-    if (player.requestFullscreen) {
-      player.requestFullscreen();
-    }
-  };
+};
 </script>
 
 </body>
